@@ -16,16 +16,64 @@ jobs:
     - name: Set Up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        echo "${{MIIEpAIBAAKCAQEA/OVWq9L7uUe7M4WxH1J0/pxfCP7xILim5n7nLiZk3Ho/QMhz
+VeerAURtofGw/HRKL/2OSFgWUNRxuDZJg+FwyAGKZc+aU7UtPPENSs13wgCHLLFA
+k4c8Fs8xIDxHp4uzB6Bo+ySvOEYycWf5O6raWM5hPkAhG1V5okjEoHRiZE1lnNYc
+q4fieybJIKUA8YSKQPbTkBMxz7TkxfGSajCBz96hfTMPmK1RD2W4oX0AFkmMYzph
+GYV38MKRRN+mVTRrdpXYCxxJL1oxRYu/6KE4IoXXc46m5qwuJ4E7j2d+U7EXYROJ
+5ke+zBA0E2P27tSox4U6DJLiYNevavgus3Ka/QIDAQABAoIBADpqNwTlbSO0//a8
+sNcNUtzk/ca0LLpkLJkdQwUT9URAMJAkPQ/gvU1Doxc/HqSRr/k51j27qxvsln/4
+ei6uSkDIqlEuDPW86cAj5fAbWchEGvUl1Ea/fA/AuBY8FkkLKcVfNiCcrqSPAmPT
+omw34MuWkDuy0HLh4YCs0k5F09xa1svqqM3TzfaIKtYW8GCoHSnI7wgFpVjGwoQ3
+V8fQJ6iNZn/nXN0UCUIQxtFttp3AOBWZlKO6IAX88BdUkoM2x9QjST3J4QtxxRoj
+2SQzD9EKrKnRo9BMQMz/ktSDWcbG37JGQm6cWAxED8mwdXzTqRRNysfYrWrjmM8R
+u48DlzkCgYEA/os8pMoRvdzecJiKv0qtWI8WMNuC/291ztqmi2W18B9feJbFvo21
+6SGLYhTH4iuixR66uvAfg8woxyWWbt14tPoo4FfoljnO+T0yIEUUsOL+u7L9sH02
+wYg0fv3pQNuptwCkhrJJPNSeBR6yhpNsra3M7P8kInCatemcBOf/v8sCgYEA/lew
+L0GbjcyvNbDCt364HVXp0kbmfOEKGSZIBG1uGP/+psxI6TOJrmEES+RmPih/g32y
+lMnwbQWAfT1pC8XognO26dCTEECMMMMq7WUta4vJ2DN0fZD+5JF+dUUNTZDpMvfJ
+4Xe6EwUBwfOBUuj3Y3FFUjMV+qCR35YVdtzhp1cCgYEAhxqeQJUkX5L42eiNVEUt
+xuCDlcEdQbkGXZm+ZiTBMcdlJBtar+6FjE0Kry96fHhOt7O8xvYmtAzL5A/2Tbft
+lplk0ta2E+5xBedOUMR52/1P2Y6CioebZZOG0ZSxloRBC2oi6X990fTEPtFxTm63
+c2PZbj1qD4GXDFEHR69gFosCgYACXgqTxgaOoVMYKtcFIjbQfxY4ENTgYK/ZYBPX
+hrU5olhacRhUo1gquVhy5GNXPMVDEg5xeBe2zBBQGhw6MdNiM3WGY5ya0B797TMf
+Fov/rkNoscHp0UmuEvScXtIq4KhrAwdsA9NFjgxgI8YWYXi8Ajfk9fjEZm41KI52
+lsO67QKBgQCpwkaF4tNB6fPkaVQuIVKZs4APo7eaJIsXue5MntU2rvDmiTXdG1tA
+SBfy8EeL32/HvqnyzkDQUzedcG1aSRdc50oeffWl35guBU8Qhp+fWY+nRxpYg4BR
+6e7KJ+7kzZpJAp6E91zENzflrj7aROg4tP4tFknCtxws3WNtuoZpQA==}}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        echo "${{ secrets.EC2_HOST }}" > ~/.ssh/known_hosts
+        echo "${{ip-172-31-17-179.ec2.internal}}" > ~/.ssh/known_hosts
 
     - name: Transfer Files to EC2
       uses: appleboy/scp-action@v0.1.3
       with:
-        host: ${{ secrets.EC2_HOST }}
+        host: ${{ip-172-31-17-179.ec2.internal}}
         username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
+        key: ${{MIIEpAIBAAKCAQEA/OVWq9L7uUe7M4WxH1J0/pxfCP7xILim5n7nLiZk3Ho/QMhz
+VeerAURtofGw/HRKL/2OSFgWUNRxuDZJg+FwyAGKZc+aU7UtPPENSs13wgCHLLFA
+k4c8Fs8xIDxHp4uzB6Bo+ySvOEYycWf5O6raWM5hPkAhG1V5okjEoHRiZE1lnNYc
+q4fieybJIKUA8YSKQPbTkBMxz7TkxfGSajCBz96hfTMPmK1RD2W4oX0AFkmMYzph
+GYV38MKRRN+mVTRrdpXYCxxJL1oxRYu/6KE4IoXXc46m5qwuJ4E7j2d+U7EXYROJ
+5ke+zBA0E2P27tSox4U6DJLiYNevavgus3Ka/QIDAQABAoIBADpqNwTlbSO0//a8
+sNcNUtzk/ca0LLpkLJkdQwUT9URAMJAkPQ/gvU1Doxc/HqSRr/k51j27qxvsln/4
+ei6uSkDIqlEuDPW86cAj5fAbWchEGvUl1Ea/fA/AuBY8FkkLKcVfNiCcrqSPAmPT
+omw34MuWkDuy0HLh4YCs0k5F09xa1svqqM3TzfaIKtYW8GCoHSnI7wgFpVjGwoQ3
+V8fQJ6iNZn/nXN0UCUIQxtFttp3AOBWZlKO6IAX88BdUkoM2x9QjST3J4QtxxRoj
+2SQzD9EKrKnRo9BMQMz/ktSDWcbG37JGQm6cWAxED8mwdXzTqRRNysfYrWrjmM8R
+u48DlzkCgYEA/os8pMoRvdzecJiKv0qtWI8WMNuC/291ztqmi2W18B9feJbFvo21
+6SGLYhTH4iuixR66uvAfg8woxyWWbt14tPoo4FfoljnO+T0yIEUUsOL+u7L9sH02
+wYg0fv3pQNuptwCkhrJJPNSeBR6yhpNsra3M7P8kInCatemcBOf/v8sCgYEA/lew
+L0GbjcyvNbDCt364HVXp0kbmfOEKGSZIBG1uGP/+psxI6TOJrmEES+RmPih/g32y
+lMnwbQWAfT1pC8XognO26dCTEECMMMMq7WUta4vJ2DN0fZD+5JF+dUUNTZDpMvfJ
+4Xe6EwUBwfOBUuj3Y3FFUjMV+qCR35YVdtzhp1cCgYEAhxqeQJUkX5L42eiNVEUt
+xuCDlcEdQbkGXZm+ZiTBMcdlJBtar+6FjE0Kry96fHhOt7O8xvYmtAzL5A/2Tbft
+lplk0ta2E+5xBedOUMR52/1P2Y6CioebZZOG0ZSxloRBC2oi6X990fTEPtFxTm63
+c2PZbj1qD4GXDFEHR69gFosCgYACXgqTxgaOoVMYKtcFIjbQfxY4ENTgYK/ZYBPX
+hrU5olhacRhUo1gquVhy5GNXPMVDEg5xeBe2zBBQGhw6MdNiM3WGY5ya0B797TMf
+Fov/rkNoscHp0UmuEvScXtIq4KhrAwdsA9NFjgxgI8YWYXi8Ajfk9fjEZm41KI52
+lsO67QKBgQCpwkaF4tNB6fPkaVQuIVKZs4APo7eaJIsXue5MntU2rvDmiTXdG1tA
+SBfy8EeL32/HvqnyzkDQUzedcG1aSRdc50oeffWl35guBU8Qhp+fWY+nRxpYg4BR
+6e7KJ+7kzZpJAp6E91zENzflrj7aROg4tP4tFknCtxws3WNtuoZpQA==}}
         source: "./app.R"
         target: "/home/ubuntu/app.R"
 
