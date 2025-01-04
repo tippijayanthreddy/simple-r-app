@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy R Program to EC2
 
 on:
   push:
@@ -7,29 +7,21 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set Up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-
-    - name: Transfer Files to EC2
-      uses: appleboy/scp-action@v0.1.3
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.1
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        source: "./app.R"
-        target: "/home/ubuntu/app.R"
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-    - name: Restart Shiny Server
+    - name: Copy files to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} <<EOF
-        sudo systemctl restart shiny-server
-        EOF
+        scp -o StrictHostKeyChecking=no simple_program.R ec2-user@<EC2_PUBLIC_IP>:~/simple_program.R
+
+    - name: Run R script on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@<EC2_PUBLIC_IP> "Rscript ~/simple_program.R"
