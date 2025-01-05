@@ -30,10 +30,10 @@ jobs:
       env:
         EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
       run: |
-        scp app.r ec2-user@"$EC2_IP":~/app.r
+        scp app.r ec2-user@ip-172-31-17-182:~/simple-r-app
 
     - name: Run R Script on EC2
       env:
         EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
       run: |
-        ssh ec2-user@"$EC2_IP" "Rscript ~/app.r"
+        ssh ec2-user@ip-172-31-17-182: "Rscript ~/app.r"
