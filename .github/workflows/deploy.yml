@@ -24,3 +24,19 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         # Add EC2 instance to known hosts
         ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
+
+    - name: Copy R Script to EC2
+      env:
+        EC2_HOST: 54.164.80.110
+        EC2_USER: ec2-user
+        SCRIPT_PATH: ~/simple-r-app
+      run: |
+        scp -o StrictHostKeyChecking=no app.r ${{ env.EC2_USER }}@${{ env.EC2_HOST }}:${{ env.SCRIPT_PATH }}
+
+    - name: Execute R Script on EC2
+      env:
+        EC2_HOST: 54.164.80.110
+        EC2_USER: ec2-user
+        SCRIPT_PATH: ~/simple-r-app/app.r
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ env.EC2_USER }}@${{ env.EC2_HOST }} "Rscript ${{ env.SCRIPT_PATH }}"
