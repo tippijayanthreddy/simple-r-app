@@ -6,34 +6,30 @@ on:
       - main
 
 jobs:
-  deploy-r-to-ec2:
-    name: Deploy R Program to EC2 Instance
+  deploy:
+    name: Deploy R Program to EC2
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Configure SSH Access
-      env:
-        EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
+    - name: Configure SSH Key
       run: |
-        # Create .ssh directory and set permissions
+        # Create .ssh directory
         mkdir -p ~/.ssh
+        
+        # Add private key from GitHub Secrets
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
-        # Add EC2 public IP to known_hosts
-        ssh-keyscan -H 54.164.80.110 >> ~/.ssh/known_hosts
+        # Add EC2 instance to known hosts
+        ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
 
     - name: Copy R Script to EC2
-      env:
-        EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
       run: |
-        scp app.r ec2-user@54.164.80.110:~/simple-r-app
+        scp -o StrictHostKeyChecking=no app.r ec2-user@54.164.80.110:~/simple-r-app
 
-    - name: Run R Script on EC2
-      env:
-        EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
+    - name: Execute R Script on EC2
       run: |
-        ssh ec2-user@54.164.80.110: "Rscript ~/app.r"
+        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "Rscript ~/simple-r-app/app.r"
