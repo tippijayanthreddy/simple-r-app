@@ -16,14 +16,24 @@ jobs:
 
     - name: Configure SSH Key
       run: |
+        # Start SSH agent
+        eval $(ssh-agent -s)
+        
         # Create .ssh directory
         mkdir -p ~/.ssh
         
         # Add private key from GitHub Secrets
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
+        
+        # Add the key to SSH agent
+        ssh-add ~/.ssh/id_rsa
+        
         # Add EC2 instance to known hosts
         ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
+        
+        # Verify the key is loaded
+        ssh-add -l
 
     - name: Copy R Script to EC2
       env:
