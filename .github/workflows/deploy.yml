@@ -30,6 +30,4 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no app.r ec2-user@54.164.80.110:~/simple-r-app
 
-    - name: Execute R Script on EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "Rscript ~/simple-r-app/app.r"
+   
