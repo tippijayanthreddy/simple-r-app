@@ -25,6 +25,7 @@ jobs:
 
         # Add EC2 instance to known hosts
         ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
+        
 
         
 
