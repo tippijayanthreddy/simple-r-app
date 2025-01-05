@@ -13,9 +13,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Add private key to SSH agent
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.AWS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-add ~/.ssh/id_rsa
+
     - name: Copy R Script to EC2
       env:
-        EC2_HOST: 54.164.80.110
+        EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
         EC2_USER: ec2-user
         SCRIPT_PATH: ~/simple-r-app
       run: |
@@ -23,7 +30,7 @@ jobs:
 
     - name: Execute R Script on EC2
       env:
-        EC2_HOST: 54.164.80.110
+        EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
         EC2_USER: ec2-user
         SCRIPT_PATH: ~/simple-r-app/app.r
       run: |
