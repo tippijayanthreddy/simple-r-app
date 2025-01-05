@@ -25,14 +25,10 @@ jobs:
 
         # Add EC2 instance to known hosts
         ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
-
-    
-    - name: Execute R Script on EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "Rscript ~/simple-r-app/app.r"
-
-
-
         
+    - name: Upload R Script to S3
+      run: |
+        aws s3 cp app.r s3://jayanth.s3/simple-r-app/
+          
 
    
