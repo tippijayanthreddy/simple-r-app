@@ -1,4 +1,4 @@
-name: Deploy and Execute R Script on EC2
+name: Deploy R Program to EC2
 
 on:
   push:
@@ -6,34 +6,21 @@ on:
       - main
 
 jobs:
-  deploy-and-execute:
+  deploy:
+    name: Deploy R Program to EC2
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Start SSH agent and add private key
+    - name: Configure SSH Key
       run: |
-        eval $(ssh-agent -s)
+        # Create .ssh directory
         mkdir -p ~/.ssh
-        echo "${{ secrets.AWS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        
+        # Add private key from GitHub Secrets
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-add ~/.ssh/id_rsa
-        ssh-add -l  # List loaded keys to confirm
-
-    - name: Copy R Script to EC2
-      env:
-        EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
-        EC2_USER: ec2-user
-        SCRIPT_PATH: ~/simple-r-app
-      run: |
-        scp -o StrictHostKeyChecking=no app.r ${{ env.EC2_USER }}@${{ env.EC2_HOST }}:${{ env.SCRIPT_PATH }}
-
-    - name: Execute R Script on EC2
-      env:
-        EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
-        EC2_USER: ec2-user
-        SCRIPT_PATH: ~/simple-r-app/app.r
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ env.EC2_USER }}@${{ env.EC2_HOST }} "Rscript ${{ env.SCRIPT_PATH }}"
+        # Add EC2 instance to known hosts
+        ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
