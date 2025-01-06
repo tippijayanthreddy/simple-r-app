@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-jobs:
+  jobs:
   deploy:
     name: Deploy R Program to EC2
     runs-on: ubuntu-latest
