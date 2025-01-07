@@ -1,7 +1,7 @@
 name: Deploy R Program to EC2
 
 on:
-  pull:
+  pull_request:
     branches:
       - test-branch
 
