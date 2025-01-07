@@ -1,9 +1,9 @@
 name: Deploy R Program to EC2
 
 on:
-  push:
+  pull:
     branches:
-      - main
+      - test-branch
 
 jobs:
   deploy:
