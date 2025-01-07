@@ -4,26 +4,5 @@ on:
   pull_request:
     branches:
       - test-branch
-
-jobs:
-  deploy:
-    name: Deploy R Program to EC2
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
-    - name: Configure SSH Key
-      run: |
-        # Create .ssh directory
-        mkdir -p ~/.ssh
-        
-        # Add private key from GitHub Secrets
-        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        # Add EC2 instance to known hosts
-        ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
-
     
       
