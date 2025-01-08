@@ -1,34 +1,20 @@
-name: Deploy R Program to EC2
+name: Trigger on Pull Request
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
 
 jobs:
-  deploy:
-    name: Deploy R Program to EC2
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Configure SSH Key
-      run: |
-        # Create .ssh directory
-        mkdir -p ~/.ssh
-        
-        # Add private key from GitHub Secrets
-        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        # Add EC2 instance to known hosts
-        ssh-keyscan -H "54.164.80.110" >> ~/.ssh/known_hosts
-
-    - name: Copy R Script to EC2
-      run: |
-        scp -o StrictHostKeyChecking=no app.r ec2-user@54.164.80.110:~/simple-r-app
-    - name: Execute R Script on EC2
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "Rscript ~/simple-r-app/app.r"
-      
+      - name: Run a script
+        run: echo "cong jayanth workflow working fine"
