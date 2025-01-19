@@ -10,10 +10,10 @@ library(shiny)
 
 # Define UI
 ui <- fluidPage(
-  titlePanel("Simple Shiny App"),
+  titlePanel("jayanth"),
   sidebarLayout(
     sidebarPanel(
-      sliderInput("slider", "Slider Input", min = 1, max = 100, value = 50)
+      sliderInput("slider", "Slider Input", min = 20, max = 200, value = 100)
     ),
     mainPanel(
       textOutput("slider_value")
