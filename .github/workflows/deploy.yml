@@ -31,7 +31,7 @@ jobs:
 
     - name: Install R Packages on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "R -e 'install.packages(\"shiny\")'"
+        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "R -e 'install.packages(\"shiny\", lib=\"/home/ec2-user/Rlibs\")'"
 
     - name: Execute R Script on EC2
       run: |
