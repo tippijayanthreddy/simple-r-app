@@ -29,4 +29,6 @@ server <- function(input, output) {
 }
 
 # Run the shiny app
-shinyApp(ui = ui, server = server)
+# Run the shiny app on all interfaces and a specific port
+shinyApp(ui = ui, server = server, options = list(port = 3563, host = "0.0.0.0"))
+
