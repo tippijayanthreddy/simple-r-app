@@ -34,7 +34,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "
           mkdir -p /home/ec2-user/Rlibs &&
           chmod 700 /home/ec2-user/Rlibs &&
-          R -e 'install.packages(\"shiny\", lib=\"/home/ec2-user/Rlibs\")'
+          R -e 'install.packages(\"shiny\", lib=\"/home/ec2-user/Rlibs\", repos=\"https://cran.r-project.org\")'
         "
 
     - name: Execute R Script on EC2
