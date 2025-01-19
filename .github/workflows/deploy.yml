@@ -23,15 +23,15 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/id_rsa
         chmod 600 /home/runner/.ssh/id_rsa
         # Add EC2 instance to known hosts
-        ssh-keyscan -H "54.164.80.110" >> /home/runner/.ssh/known_hosts
+        ssh-keyscan -H "3.93.191.80" >> /home/runner/.ssh/known_hosts
 
     - name: Copy R Script to EC2
       run: |
-        scp -o StrictHostKeyChecking=no app.r ec2-user@54.164.80.110:/home/ec2-user/
+        scp -o StrictHostKeyChecking=no app.r ec2-user@3.93.191.80:/home/ec2-user/
 
     
 
     - name: Execute R Script on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.164.80.110 "Rscript /home/ec2-user/app.r"
+        ssh -o StrictHostKeyChecking=no ec2-user@3.93.191.80 "Rscript /home/ec2-user/app.r"
 
